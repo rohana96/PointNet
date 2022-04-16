@@ -1,0 +1,7 @@
+exp: ./output/n_points/100,  test accuracy: 0.8091734197730956 
+exp: ./output/n_points/100,  test accuracy: 0.8124149108589951 
+exp: ./output/rot/60.0,  test accuracy: 0.507648946515397 
+exp: ./output/rot/120.0,  test accuracy: 0.33459497568881685 
+exp: ./output/rot/180.0,  test accuracy: 0.32934294975688816 
+exp: ./output/n_points/1000,  test accuracy: 0.8894927066450568 
+exp: ./output/n_points/5000,  test accuracy: 0.8989730956239871 
