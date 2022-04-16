@@ -3,12 +3,15 @@
 ### Andrew ID: Rohan Agarwal 
 ### Late Days used: 1
   
-  
-  
+
   
 I implemented architectures for the classification and segmentation models inspired by the PointNet architecture.
 
 ## Q1. Classification Model
+
+`Usage: python train.py --task cls --exp_name pointnet_cls
+        python eval_cls.py`
+        
 
 |Test Accuracy: | 97.48% |
 |-----|--------|
@@ -63,6 +66,9 @@ and that very likely contributes to the error.
 
 
 ## Q2. Segmentation Model
+
+`Usage: python train.py --task seg --exp_name pointnet_seg
+        python eval_seg.py`
 
 |Test Accuracy: | 89.95% |
 |-----|--------|
@@ -138,6 +144,7 @@ learned global features doesn't vary significantly. More intuitively, it can be 
 
 ### Rotation:
 
+`Usage: python eval_cls.py --exp_name cls --rotate --rot_angle 60`
 
 | no rotation                              | rotation        60&deg;                           | rotation        120&deg;                           | rotation         180&deg;                          |
 |------------------------------------------|---------------------------------------------------|----------------------------------------------------|----------------------------------------------------|
@@ -146,6 +153,9 @@ learned global features doesn't vary significantly. More intuitively, it can be 
 | ![](output/cls/classwise/tp_vase_0.gif)  | ![](output/rot/60.0/cls/classwise/tp_vase_0.gif)  | ![](output/rot/120.0/cls/classwise/tp_vase_0.gif)  | ![](output/rot/180.0/cls/classwise/fp_vase_0.gif)  |
 
 ### Varying number of points
+
+`Usage: python eval_cls.py --exp_name cls --change_n_points --num_points 100`
+
 | num points 10000                         | num points 5000                                        | num points 1000                                        | num points 100                                        |
 |------------------------------------------|--------------------------------------------------------|--------------------------------------------------------|-------------------------------------------------------|
 | ![](output/cls/classwise/tp_chair_1.gif) | ![](output/n_points/5000/cls/classwise/tp_chair_1.gif) | ![](output/n_points/1000/cls/classwise/tp_chair_1.gif) | ![](output/n_points/100/cls/classwise/tp_chair_1.gif) |
@@ -156,6 +166,9 @@ learned global features doesn't vary significantly. More intuitively, it can be 
 ## Segmentation Model
 
 ### Rotation
+
+`Usage: python eval_seg.py --exp_name seg --rotate --rot_angle 60`
+
  | rotation 60&deg;                    | rotation 120&deg;                     | rotation 180&deg;                    |
 |-------------------------------------|---------------------------------------|--------------------------------------|
 | ![](output/rot/60.0/seg/best/0.gif) | ![](output/rot/120.0/seg/best/0.gif)  | ![](output/rot/180.0/seg/best/0.gif) |
@@ -165,6 +178,8 @@ learned global features doesn't vary significantly. More intuitively, it can be 
 
 
 ### Varying number of points
+
+`Usage:  python eval_seg.py --exp_name seg --change_n_points --num_points 100`
 
  | num points 100                          | num points 1000                          | num points 5000                          |
 |-----------------------------------------|------------------------------------------|------------------------------------------|
