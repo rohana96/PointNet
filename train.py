@@ -1,16 +1,22 @@
+"""
+Usage: python train.py --task cls --exp_name pointnet_cls
+        python train.py --task seg --exp_name pointnet_seg
+"""
+
 import numpy as np
 import argparse
 import torch
 import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
 
-from models import cls_model, seg_model
+from models import PointNet, PointNetSeg
 from data_loader import get_data_loader
 from utils import save_checkpoint, create_dir
 
 def train(train_dataloader, model, opt, epoch, args, writer):
     
     model.train()
+    model.to(args.device)
     step = epoch*len(train_dataloader)
     epoch_loss = 0
 
@@ -18,14 +24,15 @@ def train(train_dataloader, model, opt, epoch, args, writer):
         point_clouds, labels = batch
         point_clouds = point_clouds.to(args.device)
         labels = labels.to(args.device).to(torch.long)
-
+        # import pdb
+        # pdb.set_trace()
         # ------ TO DO: Forward Pass ------
-        predictions = 
+        _, _, predictions = model(point_clouds)
 
         if (args.task == "seg"):
             labels = labels.reshape([-1])
             predictions = predictions.reshape([-1, args.num_seg_class])
-            
+        
         # Compute Loss
         criterion = torch.nn.CrossEntropyLoss()
         loss = criterion(predictions, labels)
@@ -55,7 +62,8 @@ def test(test_dataloader, model, epoch, args, writer):
 
             # ------ TO DO: Make Predictions ------
             with torch.no_grad():
-                pred_labels = 
+                 _, _, pred_labels = model(point_clouds)
+            pred_labels = torch.argmax(pred_labels, dim=-1)
             correct_obj += pred_labels.eq(labels.data).cpu().sum().item()
             num_obj += labels.size()[0]
 
@@ -74,8 +82,10 @@ def test(test_dataloader, model, epoch, args, writer):
 
             # ------ TO DO: Make Predictions ------
             with torch.no_grad():     
-                pred_labels = 
+                 _, _, pred_labels = model(point_clouds)
 
+            print()
+            pred_labels = torch.argmax(pred_labels, dim=-1)
             correct_point += pred_labels.eq(labels.data).cpu().sum().item()
             num_point += labels.view([-1,1]).size()[0]
 
@@ -99,9 +109,9 @@ def main(args):
 
     # ------ TO DO: Initialize Model ------
     if args.task == "cls":
-        model = 
+        model = PointNet()
     else:
-        model = 
+        model = PointNetSeg()
     
     # Load Checkpoint 
     if args.load_checkpoint:
@@ -143,6 +153,9 @@ def main(args):
         # Save Best Model Checkpoint
         if (current_acc >= best_acc):
             best_acc = current_acc
+            with open(f'dump/{args.task}/log.txt', 'w') as file:
+                acc_text = f"best accuracy: {best_acc}\ncheckpoint: model_epoch_{epoch}"
+                file.write(acc_text)
             print ("best model saved at epoch {}".format(epoch))
             save_checkpoint(epoch=epoch, model=model, args=args, best=True)
 
@@ -165,7 +178,7 @@ def create_parser():
     parser.add_argument('--lr', type=float, default=0.001, help='The learning rate (default 0.001)')
 
     parser.add_argument('--exp_name', type=str, default="exp", help='The name of the experiment')
-
+    parser.add_argument('--device', type=str, default='cuda', help='Specifies the device for running')
     # Directories and checkpoint/sample iterations
     parser.add_argument('--main_dir', type=str, default='./data/')
     parser.add_argument('--checkpoint_dir', type=str, default='./checkpoints')
