@@ -9,8 +9,8 @@ I implemented architectures for the classification and segmentation models inspi
 
 ## Q1. Classification Model
 
-`Usage: python train.py --task cls --exp_name pointnet_cls
-        python eval_cls.py`
+`Usage: python train.py --task cls --exp_name pointnet_cls`  
+        `       python eval_cls.py`
         
 
 |Test Accuracy: | 97.48% |
@@ -67,8 +67,8 @@ and that very likely contributes to the error.
 
 ## Q2. Segmentation Model
 
-`Usage: python train.py --task seg --exp_name pointnet_seg
-        python eval_seg.py`
+`Usage: python train.py --task seg --exp_name pointnet_seg`  
+        `       python eval_seg.py`
 
 |Test Accuracy: | 89.95% |
 |-----|--------|
@@ -80,13 +80,13 @@ missing or non-flat backrest, disjointed segments and sofa-like examples.
 
 #### Top best and worst performing examples by accuracy:
 
-| Top 5 best performing cases   | Top 5 worst performing cases |
-|-------------------------------|------------------------------|
-| ![](output/seg/best/0.gif)    | ![](output/seg/worst/0.gif)  |
-| ![](output/seg/best/1.gif)    | ![](output/seg/worst/1.gif)  |
-| ![](output/seg/best/2.gif)    | ![](output/seg/worst/2.gif)  |
-| ![](output/seg/best/3.gif)    | ![](output/seg/worst/3.gif)  |
-| ![](output/seg/best/4.gif)    | ![](output/seg/worst/4.gif)  |
+| Top 5 best performing cases - prediction | Top 5 best performing cases - GT | Top 5 worst performing cases - prediction | Top 5 worst performing cases - GT                |
+|---------------------------------|---------------------------------|----------------------------------|--------------------------------------------------|
+| ![](output/seg/best/0.gif)      |       ![](output_gt/output/rot/0.0/seg/best/0_gt.gif)                          | ![](output/seg/worst/0.gif)      | ![](output_gt/output/rot/0.0/seg/worst/0_gt.gif) |
+| ![](output/seg/best/1.gif)      |       ![](output_gt/output/rot/0.0/seg/best/1_gt.gif)                          | ![](output/seg/worst/1.gif)      | ![](output_gt/output/rot/0.0/seg/worst/1_gt.gif) |
+| ![](output/seg/best/2.gif)      |       ![](output_gt/output/rot/0.0/seg/best/2_gt.gif)                          | ![](output/seg/worst/2.gif)      | ![](output_gt/output/rot/0.0/seg/worst/2_gt.gif) |
+| ![](output/seg/best/3.gif)      |       ![](output_gt/output/rot/0.0/seg/best/3_gt.gif)                          | ![](output/seg/worst/3.gif)      |        ![](output_gt/output/rot/0.0/seg/worst/3_gt.gif)                                          |
+| ![](output/seg/best/4.gif)      |       ![](output_gt/output/rot/0.0/seg/best/4_gt.gif)                          | ![](output/seg/worst/4.gif)      |        ![](output_gt/output/rot/0.0/seg/worst/4_gt.gif)                                          |
 
 
 ## Q3. Robustness Analysis
@@ -169,11 +169,12 @@ learned global features doesn't vary significantly. More intuitively, it can be 
 
 `Usage: python eval_seg.py --exp_name seg --rotate --rot_angle 60`
 
- | rotation 60&deg;                    | rotation 120&deg;                     | rotation 180&deg;                    |
-|-------------------------------------|---------------------------------------|--------------------------------------|
-| ![](output/rot/60.0/seg/best/0.gif) | ![](output/rot/120.0/seg/best/0.gif)  | ![](output/rot/180.0/seg/best/0.gif) |
-| ![](output/rot/60.0/seg/best/1.gif) | ![](output/rot/120.0/seg/best/1.gif)  | ![](output/rot/180.0/seg/best/1.gif) |
-| ![](output/rot/60.0/seg/best/2.gif) | ![](output/rot/120.0/seg/best/2.gif)  | ![](output/rot/180.0/seg/best/2.gif) |
+ | rotation 60&deg;    predictions     | rotation 60&deg;    GT                            | rotation 120&deg;        predictions | rotation 120&deg;       GT                   | rotation 180&deg;      predictions    | rotation 180&deg;      GT                          |
+|-------------------------------------|--------------------------------------------------|--------------------------------------|---------------------------------------------------|--------------------------------------|---------------------------------------------------|
+| ![](output/rot/60.0/seg/best/0.gif) | ![](output_gt/output/rot/60.0/seg/best/0_gt.gif) | ![](output/rot/120.0/seg/best/0.gif) | ![](output_gt/output/rot/120.0/seg/best/0_gt.gif) | ![](output/rot/180.0/seg/best/0.gif) | ![](output_gt/output/rot/180.0/seg/best/0_gt.gif) |
+| ![](output/rot/60.0/seg/best/1.gif) | ![](output_gt/output/rot/60.0/seg/best/1_gt.gif) | ![](output/rot/120.0/seg/best/1.gif) | ![](output_gt/output/rot/120.0/seg/best/1_gt.gif) | ![](output/rot/180.0/seg/best/1.gif) | ![](output_gt/output/rot/180.0/seg/best/1_gt.gif) |
+| ![](output/rot/60.0/seg/best/2.gif) | ![](output_gt/output/rot/60.0/seg/best/2_gt.gif) | ![](output/rot/120.0/seg/best/2.gif) | ![](output_gt/output/rot/120.0/seg/best/2_gt.gif) | ![](output/rot/180.0/seg/best/2.gif) | ![](output_gt/output/rot/180.0/seg/best/2_gt.gif) |
+
 
 
 
@@ -181,9 +182,9 @@ learned global features doesn't vary significantly. More intuitively, it can be 
 
 `Usage:  python eval_seg.py --exp_name seg --change_n_points --num_points 100`
 
- | num points 100                          | num points 1000                          | num points 5000                          |
-|-----------------------------------------|------------------------------------------|------------------------------------------|
- | ![](output/n_points/100/seg/best/0.gif) | ![](output/n_points/1000/seg/best/0.gif) | ![](output/n_points/5000/seg/best/0.gif) |
- | ![](output/n_points/100/seg/best/1.gif) | ![](output/n_points/1000/seg/best/1.gif) | ![](output/n_points/5000/seg/best/1.gif) |
- | ![](output/n_points/100/seg/best/2.gif) | ![](output/n_points/1000/seg/best/2.gif) | ![](output/n_points/5000/seg/best/2.gif) |
+ | num points 100    predictions                    | num points 100 GT                                     | num points 1000  predictions      |num points 1000 GT                              | num points 5000          predictions     | num points 5000 GT                                     |
+|-----------------------------------------|------------------------------------------------------|---------------------------------------------------------------|-------------------------------------------------|------------------------------------------|-------------------------------------------------------|
+ | ![](output/n_points/100/seg/best/0.gif) | ![](output_gt/output/n_points/100/seg/best/0_gt.gif) | ![](output/n_points/1000/seg/best/0.gif)                      | ![](output_gt/output/n_points/1000/seg/best/0_gt.gif) | ![](output/n_points/5000/seg/best/0.gif) | ![](output_gt/output/n_points/5000/seg/best/0_gt.gif) |
+ | ![](output/n_points/100/seg/best/1.gif) | ![](output_gt/output/n_points/100/seg/best/1_gt.gif) | ![](output/n_points/1000/seg/best/1.gif)                      | ![](output_gt/output/n_points/1000/seg/best/1_gt.gif) | ![](output/n_points/5000/seg/best/1.gif) | ![](output_gt/output/n_points/5000/seg/best/1_gt.gif) |
+ | ![](output/n_points/100/seg/best/2.gif) | ![](output_gt/output/n_points/100/seg/best/2_gt.gif) | ![](output/n_points/1000/seg/best/2.gif)                      | ![](output_gt/output/n_points/1000/seg/best/2_gt.gif) | ![](output/n_points/5000/seg/best/2.gif) | ![](output_gt/output/n_points/5000/seg/best/2_gt.gif) |
 
