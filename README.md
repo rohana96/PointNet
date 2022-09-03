@@ -1,11 +1,5 @@
-# Assignment 5
 
-### Andrew ID: Rohan Agarwal 
-### Late Days used: 1
-  
-
-  
-I implemented architectures for the classification and segmentation models inspired by the PointNet architecture.
+ Implementations for classification and segmentation models inspired by the PointNet architecture.
 
 ## Q1. Classification Model
 
